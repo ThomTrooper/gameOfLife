@@ -3,6 +3,9 @@ local colonnes = 50
 local tailleCellule = 20
 local matrice = {}
 
+local dx = {-1, 0, 1, 1, 1, 0, -1, -1}
+local dy = {-1, -1, -1, 0, 1, 1 ,1, 0}
+
 -- Génération d'ne matrice vide
 local function genMatrice()
     local matrice = {}
@@ -38,8 +41,6 @@ end
 -- Compte le nombre de cell voisines vivantes
 lcoal function getNbVoisinsVivant(x, y, matrice)
     local cmpt = 0 
-    local dx = {-1, 0, 1, 1, 1, 0, -1, -1}
-    local dy = {-1, -1, -1, 0, 1,1 ,1, 0}
 
     for i = 1, #dx do
         local nx = x + dx[i]
@@ -53,4 +54,32 @@ lcoal function getNbVoisinsVivant(x, y, matrice)
     end
 
     return cmpt    
+end
+
+local function step(old_matrice)
+    local nouvelle_matrice = genMatrice()
+
+    for i= 1, lignes do
+        for j = 1, colonnes do
+            local voisins = getNbVoisinsVivant(i, j, old_matrice)
+            local age = old_matrice[i][j]
+
+            if age > 0 then
+                -- cellule vivante
+                if voisins == 2 or voisins == 3 then
+                    nouvelle_matrice[i][j] = age + 1
+                else
+                    nouvelle_matrice[i][j] = 0
+                end
+            else
+                -- cellule morte
+                if voisisn == 3 then 
+                    nouvelle_matrice[i][j] = 1
+                else
+                    nouvelle_matrice[i][j] = 0
+                end
+            end
+        end
+    end
+    return nouvelle_matrice
 end
