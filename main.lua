@@ -9,7 +9,7 @@ local dy = {-1, -1, -1, 0, 1, 1 ,1, 0}
 local matrice = {}
 local matriceSuivante = {}
 
--- Génération d'ne matrice vide
+-- Génération d'une matrice vide
 local function genMatrice()
     local matrice = {}
     for i = 1 , lignes do
