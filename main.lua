@@ -34,3 +34,23 @@ local function initMatrice(matrice, proba)
         end
     end
 end
+
+-- Compte le nombre de cell voisines vivantes
+lcoal function getNbVoisinsVivant(x, y, matrice)
+    local cmpt = 0 
+    local dx = {-1, 0, 1, 1, 1, 0, -1, -1}
+    local dy = {-1, -1, -1, 0, 1,1 ,1, 0}
+
+    for i = 1, #dx do
+        local nx = x + dx[i]
+        local ny = y + dy[i]
+
+        if nx >= 1 and nx <= lignes and ny >= 1 and ny <= colonnes then
+            if matrice[nx][ny] > 0 then
+                cmpt = cmpt + 1
+            end
+        end
+    end
+
+    return cmpt    
+end
