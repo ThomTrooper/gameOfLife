@@ -6,6 +6,9 @@ local matrice = {}
 local dx = {-1, 0, 1, 1, 1, 0, -1, -1}
 local dy = {-1, -1, -1, 0, 1, 1 ,1, 0}
 
+local matrice = {}
+local matriceSuivante = {}
+
 -- Génération d'ne matrice vide
 local function genMatrice()
     local matrice = {}
@@ -19,8 +22,8 @@ local function genMatrice()
     return matrice
 end
 
--- Function valeur random
-local function valeurRadnom(p)
+-- Fonction valeur random
+local function valeurRandom(p)
     if love.math.random() < p then
         return 1
     else
@@ -33,7 +36,7 @@ local function initMatrice(matrice, proba)
     proba = proba or 0.5
     for i = 1, lignes do
         for j= 1, colonnes do
-            matrice[i][j] = valeurRadnom(proba)
+            matrice[i][j] = valeurRandom(proba)
         end
     end
 end
@@ -56,32 +59,32 @@ local function getNbVoisinsVivant(x, y, matrice)
     return cmpt    
 end
 
-local function step(old_matrice)
-    local nouvelle_matrice = genMatrice()
-
+local function majEtape()
     for i= 1, lignes do
         for j = 1, colonnes do
-            local voisins = getNbVoisinsVivant(i, j, old_matrice)
-            local age = old_matrice[i][j]
+            local voisins = getNbVoisinsVivant(i, j, matrice)
+            local age = matrice[i][j]
 
             if age > 0 then
                 -- cellule vivante
                 if voisins == 2 or voisins == 3 then
-                    nouvelle_matrice[i][j] = age + 1
+                    matriceSuivante[i][j] = age + 1
                 else
-                    nouvelle_matrice[i][j] = 0
+                    matriceSuivante[i][j] = 0
                 end
             else
                 -- cellule morte
                 if voisins == 3 then 
-                    nouvelle_matrice[i][j] = 1
+                    matriceSuivante[i][j] = 1
                 else
-                    nouvelle_matrice[i][j] = 0
+                    matriceSuivante[i][j] = 0
                 end
             end
         end
     end
-    return nouvelle_matrice
+    -- la prochaine matrice deviens la matrice actuelle
+    matrice = matriceSuivante
+    matriceSuivante = matrice
 end
 
 
@@ -90,6 +93,7 @@ function love.load()
     love.window.setMode(colonnes * tailleCellule, lignes * tailleCellule)
     love.math.setRandomSeed(os.time())
     matrice = genMatrice()
+    matriceSuivante = genMatrice()
     initMatrice(matrice, 0.5)
 end
 
@@ -100,10 +104,10 @@ function love.update(dt)
     -- ajout du temps écoulé depuis la dernière frame
     minuterieEtape = minuterieEtape + dt
 
-    -- boucle gestion des étapes si intervalle dépassé
-    while minuterieEtape >= intervalleEtape do
-        matrice = step(matrice)
-        minuterieEtape = minuterieEtape - intervalleEtape
+    minuterieEtape = minuterieEtape + dt
+    if minuterieEtape >= intervalleEtape then
+        majEtape()
+        minuterieEtape = 0
     end
 end
 
