@@ -28,10 +28,10 @@ Chaque cellule d'une grille peut être **vivante** ou **morte**, et évolue selo
 ### 🎨 Système d'âge coloré
 Chaque cellule vivante possède un **compteur d'âge** qui détermine sa couleur :
 
-| Âge | Couleur | Signification |
-|-----|---------|---------------|
-| 0-5 | 🟢 Vert | Jeune / Naissance récente |
-| 6-10| 🟡 Jaune | Adulte / État stable |
-| 11-20| 🔴 Rouge | Vieillissante |
-| 20+| 🟣 Magenta | Très ancienne |
-| Morte | ⚫ Gris foncé | Inactif |
+| Âge      | Couleur          | Signification             |
+|----------|------------------|---------------------------|
+| 1        | 🟢 Vert         | Jeune / Naissance récente |
+| 2-10     | 🟡 Jaune        | Adulte / État stable      |
+| 11-20    | 🔴 Rouge        | Vieillissante             |
+| 21+      | 🟣 Magenta      | Très ancienne             |
+| 0        | ⚫ Gris foncé   | Morte / Inactive          |
