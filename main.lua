@@ -106,3 +106,23 @@ function love.update(dt)
         minuterieEtape = minuterieEtape - intervalleEtape
     end
 end
+
+function love.draw()
+    for i = 1, lignes do
+        local valeur = matrice[i][j]
+        if valeur > 0 then 
+            if valeur == 1 then
+                love.graphics.setColor(0, 1, 0) --vert
+            elseif valeur <= 10 then
+                love.graphics.setColor(1, 1, 0) -- jaune
+            elseif valeur <= 20 then
+                love.graphics.setColor(1, 0, 0) -- rouge
+            else
+                love.graphics.setColor(1, 0, 1) -- magenta
+            end
+        else
+            love.graphics.setColor(0.2 , 0.2, 0.2) -- gris
+        end
+        love.graphics.rectangle("fill", (j-1)*tailleCellule, (i-1)*tailleCellule, tailleCellule-1, tailleCellule-1)
+    end 
+end
