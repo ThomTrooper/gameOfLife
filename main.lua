@@ -88,7 +88,7 @@ end
 -- Initialisation de love2D
 function love.load()
     love.window.setMode(colonnes * tailleCellule, lignes * tailleCellule)
-    love.math.setRandomSeed(12345)
+    love.math.setRandomSeed(os.time())
     matrice = genMatrice()
     initMatrice(matrice, 0.5)
 end
