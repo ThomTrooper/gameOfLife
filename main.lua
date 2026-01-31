@@ -73,7 +73,7 @@ local function step(old_matrice)
                 end
             else
                 -- cellule morte
-                if voisisn == 3 then 
+                if voisins == 3 then 
                     nouvelle_matrice[i][j] = 1
                 else
                     nouvelle_matrice[i][j] = 0
