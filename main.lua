@@ -83,3 +83,26 @@ local function step(old_matrice)
     end
     return nouvelle_matrice
 end
+
+
+-- Initialisation de love2D
+function love.load()
+    love.window.setMode(colonnes * tailleCellule, lignes * tailleCellule)
+    love.math.setRandomSeed(12345)
+    matrice = genMatrice()
+    initMatrice(matrice, 0.5)
+end
+
+local intervalleEtape = 1/3  -- 3 FPS
+local minuterieEtape = 0 
+
+function love.update(dt)
+    -- ajout du temps écoulé depuis la dernière frame
+    minuterieEtape = minuterieEtape + dt
+
+    -- boucle gestion des étapes si intervalle dépassé
+    while minuterieEtape >= intervalleEtape do
+        matrice = step(matrice)
+        minuterieEtape = minuterieEtape - intervalleEtape
+    end
+end
