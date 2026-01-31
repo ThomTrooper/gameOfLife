@@ -39,7 +39,7 @@ local function initMatrice(matrice, proba)
 end
 
 -- Compte le nombre de cell voisines vivantes
-lcoal function getNbVoisinsVivant(x, y, matrice)
+local function getNbVoisinsVivant(x, y, matrice)
     local cmpt = 0 
 
     for i = 1, #dx do
