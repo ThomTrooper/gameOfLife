@@ -16,3 +16,11 @@ local function genMatrice()
     return matrice
 end
 
+-- Function valeur random
+local function valeurRadnom(p)
+    if love.math.random() < p then
+        return 1
+    else
+        return 0
+    end
+end
