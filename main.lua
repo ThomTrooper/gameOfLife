@@ -24,3 +24,13 @@ local function valeurRadnom(p)
         return 0
     end
 end
+
+-- Initialisation de la matrice
+local function initMatrice(matrice, proba)
+    proba = proba or 0.5
+    for i = 1, lignes do
+        for j= 1, colonnes do
+            matrice[i][j] = valeurRadnom(proba)
+        end
+    end
+end
