@@ -16,3 +16,19 @@ Matrice genMatrice(){
     return Matrice(lignes, std:vector<int>(colonnes, 0));
 }
 
+// Fonction valeur random
+
+int valeurRandom(float p, std:mt19937& gen, std:uniform_real_distribution<float>& dis){
+    if (dis(gen) < p) return 1;
+    else return 0
+}
+
+// Initialisation matrice avec valeur aléa
+void initMatrice(Matrice& matrice, flaot proba, std::mt19937& gen, std::uniform_int_distribution<float>& dis){
+    for (int i = 0; i < lignes; ++i){
+        for (int j = 0; j < colonnes; ++j){
+            matrice[i][j] = valeurRandom(proba, gen, dis);
+        }
+    }
+}
+
