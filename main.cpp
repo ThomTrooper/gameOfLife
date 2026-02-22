@@ -4,7 +4,7 @@
 
 cosnt int lignes = 30;
 const int colonnes = 50;
-const int tailleCellulre = 20;
+const int tailleCellule = 20;
 
 const int dx[]= {-1, 0, 1, 1, 1, 0, -1, -1};
 const int dy = {-1, -1, -1, 0, 1, 1, 1, 0};
@@ -73,4 +73,75 @@ void majEtape(Matrice& matrice, Matrice& matriceSuivante){
         }
     }
     matrice = matriceSuivante;
+}
+
+int main(){
+    // Init fen SFML
+    sf::RenderWindow window(sf::VideoMode(colonnes * tailleCellule, lignes * tailleCellule), "Jeu de la vie");
+
+    // Init aléa
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<float> dis(0.0f, 1.0f);
+
+    Matrice matrice = genMatrice();
+    Matrice matriceSuivante = genMatrice();
+
+    initMatrice(matrice, 0.5f, gen, dis);
+
+    float intervalleEtape = 1.0f /3.0f; // 3 FPS
+    float minuterie = 0.0f;
+
+    sf::Clock clock;
+    sf::RectangleShape cellShape(sf::Vector2f(tailleCellule - 1.0f, tailleCellule-1.0f));
+    while (window.isOpen()) {
+        // Gestion evemenements
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+        }
+
+        // udpate
+        float dt = clock.restart().asSeconds();
+        minuterieEtape += dt;
+
+        if (minuterieEtape >= intervalleEtape) {
+            majEtape(matrice, matriceSuivante);
+            minuterieEtape = 0.0f;
+        }
+
+        // dessiner
+        window.clear(sf::Color::Black); // Fond noir
+
+        for (int i = 0; i < lignes; ++i) {
+            for (int j = 0; j < colonnes; ++j) {
+                int valeur = matrice[i][j];
+                
+                if (valeur > 0) {
+                    if (valeur == 1) {
+                        cellShape.setFillColor(sf::Color::Green);
+                    } else if (valeur <= 10) {
+                        cellShape.setFillColor(sf::Color::Yellow);
+                    } else if (valeur <= 20) {
+                        cellShape.setFillColor(sf::Color::Red);
+                    } else {
+                        cellShape.setFillColor(sf::Color::Magenta);
+                    }
+                } else {
+                    cellShape.setFillColor(sf::Color(51, 51, 51));
+
+                }
+
+                // Positionnement et dessin
+                cellShape.setPosition(j * tailleCellule, i * tailleCellule);
+                window.draw(cellShape);
+            }
+        }
+
+        window.display(); // Affichage
+    }
+
+    return 0;
 }
