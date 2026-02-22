@@ -103,8 +103,6 @@ local minuterieEtape = 0
 function love.update(dt)
     -- ajout du temps écoulé depuis la dernière frame
     minuterieEtape = minuterieEtape + dt
-
-    minuterieEtape = minuterieEtape + dt
     if minuterieEtape >= intervalleEtape then
         majEtape()
         minuterieEtape = 0
