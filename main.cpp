@@ -49,3 +49,28 @@ int getNbVoisinsVivant(int x, int y, const Matrice& matrice){
 
     return cmpt;
 }
+
+// Maj étape du jeu
+void majEtape(Matrice& matrice, Matrice& matriceSuivante){
+    for (int i = 0; i < lignes; ++i){
+        for (int j =0; j < colonnes; ++j){
+            int voisins = getNbVoisinsVivant(i, j , matrice);
+            int age = matrice[i][j];
+
+            if (age > 0){ // cellule vivante
+                if (voisins == 2 ||voisins == 3){
+                    matriceSuivante[i][j] = age+1;
+                } else{
+                    matriceSuivante[i][j] = 0;
+                } 
+            } else{ // cellule morte
+                if (voisins == 3){
+                    matrice[i][j] = 1;
+                }else{
+                    matrice[i][j] = 0;
+                }
+            }
+        }
+    }
+    matrice = matriceSuivante;
+}
