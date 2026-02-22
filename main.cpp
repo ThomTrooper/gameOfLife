@@ -32,3 +32,20 @@ void initMatrice(Matrice& matrice, flaot proba, std::mt19937& gen, std::uniform_
     }
 }
 
+// Compte nbr de cellules voisines vivantes
+int getNbVoisinsVivant(int x, int y, const Matrice& matrice){
+    int cmpt = 0;
+
+    for(int i = 0; i < 8; ++i){
+        int nx = x + dx[i];
+        int ny = y + dy[i];
+
+        if (nx > 0 && nx < lignes && ny >= 0 && ny < colonnes){
+            if (matrice[nx][ny] > 0){
+                cmpt++;
+            }
+        }
+    }
+
+    return cmpt;
+}
